@@ -1,0 +1,86 @@
+---
+Parameters:
+  CidrRange:
+    Description: Custom CIDR block size must be between /16 and /28.
+    Type: String
+    AllowedPattern: "(\\d{1,3})\\.(\\d{1,3})\\.(\\d{1,3})\\.(\\d{1,3})/(\\d{1,2})"
+  DemoAZ:
+    Description: Select a Availability Zone
+    Type: String
+    AllowedValues:
+      - ap-south-1a
+      - ap-south-1b
+  InsType:
+    Description: Select a Instance Type
+    Type: String
+    Default: t2.micro
+    AllowedValues:
+      - t2.micro
+      - t2.nano
+
+Resources:
+  taskVPC:
+    Type: AWS::EC2::VPC
+    Properties:
+      CidrBlock: !Ref CidrRange
+  taskSubnet:
+    Type: AWS::EC2::Subnet
+    Properties:
+      CidrBlock: !GetAtt taskVPC.CidrBlock
+      AvailabilityZone: !Ref DemoAZ
+      VpcId: !GetAtt taskVPC.VpcId
+  taskRT:
+    Type: AWS::EC2::RouteTable
+    Properties:
+      VpcId: !GetAtt taskVPC.VpcId
+  taskIG:
+    Type: AWS::EC2::InternetGateway
+  taskGatewayAttach:
+    Type: AWS::EC2::VPCGatewayAttachment
+    Properties:
+      InternetGatewayId: !GetAtt taskIG.InternetGatewayId
+      VpcId: !GetAtt taskVPC.VpcId
+  taskIGRoute:
+    Type: AWS::EC2::Route
+    Properties:
+      DestinationCidrBlock: 0.0.0.0/0
+      GatewayId: !GetAtt taskIG.InternetGatewayId
+      RouteTableId: !GetAtt taskRT.RouteTableId
+  taskLC:
+    Type: AWS::AutoScaling::LaunchConfiguration
+    Properties:
+      ImageId: ami-0a4408457f9a03be3
+      InstanceType: !Ref InsType
+      KeyName: FirstKey
+      SecurityGroups:
+        - !Ref SSHSecurityGroup
+  SSHSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: Enable SSH access via port 22
+      SecurityGroupIngress:
+      - CidrIp: 0.0.0.0/0
+        FromPort: 22
+        IpProtocol: tcp
+        ToPort: 22
+  taskASG:
+    Type: AWS::AutoScaling::AutoScalingGroup
+    Properties:
+      AutoScalingGroupName: taskASG
+      AvailabilityZones:
+        - ap-south-1a
+      MinSize: 1
+      MaxSize: 2
+      LaunchConfigurationName: !Ref taskLC
+Outputs:
+  VPCName:
+    Description: The Custom VPC
+    Value: !GetAtt taskVPC.VpcId
+  VPCCidr:
+    Description: VPC CIDR Range
+    Value: !GetAtt taskVPC.CidrBlock
+  ASGName:
+    Description: Custom ASG
+    Value: !Ref taskASG
+
+  
