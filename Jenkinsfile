@@ -10,7 +10,7 @@ pipeline {
         }
        stage('Deploy') {
             environment {
-                STACK_NAME = 'CFN_task'
+                STACK_NAME = 'CfnTask'
                 S3_BUCKET = 'my-s3-bucket'
                 AWS_REGION = 'ap-south-1'
             }
