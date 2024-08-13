@@ -2,12 +2,7 @@ pipeline {
   agent any
  
  stages {
-        stage('checkout') {
-            steps {
-                git branch: 'main', url: 'https://github.com/J007acky/CFN_Deploy.git'
-            }
-          
-        }
+        
        stage('Deploy') {
             environment {
                 STACK_NAME = 'CfnTask'
