@@ -6,7 +6,7 @@ pipeline {
        stage('Deploy') {
             environment {
                 STACK_NAME = 'CfnTask'
-                S3_BUCKET = 'my-s3-bucket'
+                S3_BUCKET = 'rahul-bucket-v2'
                 AWS_REGION = 'ap-south-1'
             }
             steps {
