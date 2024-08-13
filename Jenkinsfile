@@ -17,7 +17,7 @@ pipeline {
             steps {
                 // Deploy the SAM application
                 withAWS(credentials: 'jenkins_user', region: "$AWS_REGION") {
-                    sh 'venv/bin/sam deploy --stack-name $STACK_NAME -t template.yaml --s3-bucket $S3_BUCKET --capabilities CAPABILITY_IAM'
+                    sh 'sam deploy --stack-name $STACK_NAME -t template.yaml --s3-bucket $S3_BUCKET --capabilities CAPABILITY_IAM'
                 }
             }
         }
