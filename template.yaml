@@ -156,6 +156,7 @@ Resources:
 
   MyEventSourceMapping:
     Type: AWS::Lambda::EventSourceMapping
+    DependsOn: MyGlobalTable
     Properties:
       BatchSize: 100
       FunctionName: !Ref  MyLambdaEnabler
