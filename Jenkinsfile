@@ -27,7 +27,7 @@ pipeline {
             steps {
                 script {
                     // Validate the SAM template
-                    sh 'sam validate'
+                    sh 'sam validate --region ${AWS_REGION}'
                 }
             }
         }
