@@ -12,7 +12,7 @@ pipeline {
             steps {
                 // Deploy the SAM application
                 withAWS(credentials: 'jenkins_user', region: "$AWS_REGION") {
-                    sh 'package --template-file template.yaml --s3-bucket rahul-bucket-v2 --output-template-file output.yaml'
+                    sh 'sam package --template-file template.yaml --s3-bucket rahul-bucket-v2 --output-template-file output.yaml'
                     sh 'sam deploy --stack-name $STACK_NAME -t output.yaml --s3-bucket $S3_BUCKET --capabilities CAPABILITY_NAMED_IAM'
                 }
             }
