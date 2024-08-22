@@ -60,7 +60,7 @@ Resources:
               - User_name
             ProjectionType: INCLUDE          
       Replicas:
-        - Region: !Ref Region1
+        - Region: ap-south-1
           ReadProvisionedThroughputSettings:
             ReadCapacityAutoScalingSettings:
               MinCapacity: 1
@@ -74,7 +74,7 @@ Resources:
             - Key: Project
               Value: Task-1
 
-        - Region: !Ref Region2
+        - Region: us-west-2
           ReadProvisionedThroughputSettings:
             ReadCapacityAutoScalingSettings:
               MinCapacity: 1
