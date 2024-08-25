@@ -6,7 +6,7 @@ Resources:
     Type: AWS::EC2::Subnet
     Properties:
       CidrBlock: 10.0.1.0/24
-      VpcId: !ImportValue MyVpcId
+      VpcId: !ImportValue MyVpcId1
 
 Outputs:
   SubnetId:
