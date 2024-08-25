@@ -35,9 +35,11 @@ pipeline {
         stage('Deploying Template A') {
             steps {
                 script {
+                    withAWS(credentials: 'aws-access', region: "$AWS_REGION") {
                     // Package the SAM template, upload artifacts to S3
                     sh "sam package --template-file A.yaml --s3-bucket ${S3_BUCKET} --output-template-file packagedA.yaml --region ${AWS_REGION}"
                     sh "sam deploy --template-file packagedA.yaml --stack-name ${STACK_NAME} --capabilities CAPABILITY_IAM --region ${AWS_REGION}"
+                }
                 }
             }
         }
@@ -45,9 +47,11 @@ pipeline {
         stage('Deploying Template B') {
             steps {
                 script {
+                    withAWS(credentials: 'aws-access', region: "$AWS_REGION") {
                     // Deploy the SAM template using CloudFormation
                     sh "sam package --template-file B.yaml --s3-bucket ${S3_BUCKET} --output-template-file packagedA.yaml --region ${AWS_REGION}"
                     sh "sam deploy --template-file packagedB.yaml --stack-name ${STACK_NAME} --capabilities CAPABILITY_IAM --region ${AWS_REGION}"
+                }
                 }
             }
         }
