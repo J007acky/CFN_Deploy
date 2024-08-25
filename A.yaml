@@ -20,4 +20,4 @@ Outputs:
   VpcIdExport:
     Value: !Ref Vpc
     Export:
-      Name: MyVpcId
+      Name: MyVpcId1
