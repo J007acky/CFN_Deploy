@@ -4,7 +4,7 @@ pipeline {
     environment {
         AWS_REGION = 'ap-south-1' // Set your default AWS region
         S3_BUCKET = 'rahul-bucket-v2' // S3 bucket to store packaged template
-        STACK_NAME = 'SAMjenkins' // CloudFormation stack name
+        STACK_NAME = 'SAMjenkins1' // CloudFormation stack name
         STACK_NAME2 = 'SAMjenkins2' // CloudFormation stack name
     }
 
