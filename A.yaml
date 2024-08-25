@@ -5,6 +5,7 @@ Parameters:
   VpcName:
     Description: Name of the VPC
     Type: String
+    Default: MYVPC
 
 Resources:
   Vpc:
@@ -13,7 +14,7 @@ Resources:
       CidrBlock: 10.0.0.0/16
       Tags:
         - Key: Name
-          Value: MyVPC
+          Value: !Ref VpcName
 
 Outputs:
   VpcIdExport:
