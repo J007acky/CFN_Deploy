@@ -5,6 +5,7 @@ pipeline {
         AWS_REGION = 'ap-south-1' // Set your default AWS region
         S3_BUCKET = 'rahul-bucket-v2' // S3 bucket to store packaged template
         STACK_NAME = 'SAMjenkins' // CloudFormation stack name
+        STACK_NAME2 = 'SAMjenkins2' // CloudFormation stack name
     }
 
     stages {
@@ -50,7 +51,7 @@ pipeline {
                     withAWS(credentials: 'aws-access', region: "$AWS_REGION") {
                     // Deploy the SAM template using CloudFormation
                     sh "sam package --template-file B.yaml --s3-bucket ${S3_BUCKET} --output-template-file packagedB.yaml --region ${AWS_REGION}"
-                    sh "sam deploy --template-file packagedB.yaml --stack-name ${STACK_NAME} --capabilities CAPABILITY_IAM --region ${AWS_REGION}"
+                    sh "sam deploy --template-file packagedB.yaml --stack-name ${STACK_NAME2} --capabilities CAPABILITY_IAM --region ${AWS_REGION}"
                 }
                 }
             }
