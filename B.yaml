@@ -1,18 +1,13 @@
 AWSTemplateFormatVersion: 2010-09-09
 Description: Creates a subnet within an existing VPC, importing the VpcId.
- 
-Parameters:
-  ImportedVpcId:
-    Type: String
-    Description: ID of the imported VPC
- 
+
 Resources:
   Subnet:
     Type: AWS::EC2::Subnet
     Properties:
       CidrBlock: 10.0.1.0/24
       VpcId: !ImportValue MyVpcId
- 
+
 Outputs:
   SubnetId:
     Value: !Ref Subnet
