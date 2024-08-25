@@ -1,6 +1,11 @@
 AWSTemplateFormatVersion: 2010-09-09
 Description: Creates a VPC and exports the VpcId.
- 
+
+Parameters:
+  VpcName:
+    Description: Name of the VPC
+    Type: String
+
 Resources:
   Vpc:
     Type: AWS::EC2::VPC
@@ -8,8 +13,8 @@ Resources:
       CidrBlock: 10.0.0.0/16
       Tags:
         - Key: Name
-          Value: !Ref VpcName
- 
+          Value: MyVPC
+
 Outputs:
   VpcIdExport:
     Value: !Ref Vpc
